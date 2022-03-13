@@ -18,6 +18,10 @@ export default class Grid {
     return this.#cells.filter(cell => cell.tile == null);
   }
 
+  get cells() {
+    return this.#cells;
+  }
+
   randomEmptyCell() {
     let emptyCells = this.#emptyCells;
     const randomIndex = Math.floor(Math.random() * emptyCells.length);
@@ -86,6 +90,13 @@ class Cell {
 
   canAccept(tile) {
     return (this.tile == null || ( this.mergeTile == null && this.tile.value == tile.value));
+  }
+
+  mergeTiles() {
+    if(this.tile == null || this.mergeTile == null) return;
+    this.tile.value = this.tile.value + this.mergeTile.value;
+    this.#mergeTile.remove();
+    this.#mergeTile = null;
   }
 }
 
